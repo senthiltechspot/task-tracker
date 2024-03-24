@@ -37,20 +37,21 @@ const Boards = () => {
     },
   ];
   const [isDragging, setIsDragging] = useState(false);
+  const [activeId, setActiveId] = useState(null);
   const dispatch = useDispatch();
-  function handleDragStart() {
+  function handleDragStart(event) {
     setIsDragging(true);
+    setActiveId(event.active.id);
   }
 
   function handleDragEnd(data) {
-    console.log(data);
     dispatch(updateTaskOrder({ taskId: data.active.id, status: data.over.id }));
     setIsDragging(false);
+    setActiveId(null);
   }
 
   const tasks = useSelector(selectTask);
   const filteredTasks = useSelector(selectFilterd);
-console.log(isDragging);
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <div className="flex gap-3 overflow-x-auto mt-3">
@@ -69,6 +70,7 @@ console.log(isDragging);
               isDragging={isDragging}
               {...board}
               tasks={boardTasks}
+              activeId={activeId}
             />
           );
         })}

@@ -7,7 +7,7 @@ import { Droppable } from "../../DND/Droppable";
 import { DragOverlay } from "@dnd-kit/core";
 import Draggable from "../../DND/Draggable";
 
-const Board = ({ id, title, bgColor, tasks, isDragging }) => {
+const Board = ({ id, title, bgColor, tasks, isDragging, activeId }) => {
   const sortBy = useSelector(selectSort); // Using useSelector to select data from Redux store
 
   return (
@@ -39,11 +39,13 @@ const Board = ({ id, title, bgColor, tasks, isDragging }) => {
                 <Draggable id={task.id}>
                   <Cards key={index} task={task} bgColor={bgColor} />
                 </Draggable>
-                {isDragging ? (
+                {isDragging && (
                   <DragOverlay>
-                    <Cards key={index} task={task} bgColor={bgColor} />
+                    {activeId === task.id && (
+                      <Cards key={task.id} task={task} bgColor={bgColor} />
+                    )}
                   </DragOverlay>
-                ) : null}
+                )}
               </div>
             ))}
       </div>

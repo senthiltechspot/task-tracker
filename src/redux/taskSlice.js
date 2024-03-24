@@ -98,7 +98,6 @@ export const taskSlice = createSlice({
     },
     updateTaskOrder: (state, action) => {
       const { taskId, status } = action.payload;
-      console.log(action.payload);
       state.task = state.task.map((task) => {
         if (task.id === taskId) {
           task.status = status;
